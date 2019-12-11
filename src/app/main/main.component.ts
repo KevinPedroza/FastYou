@@ -20,15 +20,12 @@ export class MainComponent implements OnInit {
   constructor(private mainService: MainService, private modalService: NgbModal, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-
   }
 
   setVideo(video: string){
     sessionStorage.clear();
     video = video.replace("watch?v=", "embed/")
     sessionStorage.setItem("video", video);
-    console.log(
-      sessionStorage.getItem("video"))
   }
   
   getVideo(){
@@ -56,10 +53,13 @@ export class MainComponent implements OnInit {
   getVideos(name) {
     this.mainService.getVideos(name).subscribe(videos => {
       this.lista = videos;
+
       const result = [];
       const map = new Map();
+
       for (const item of this.lista) {
-        if (!map.has(item.video)) {
+        if (!map.has(item.img) && !map.has(item.video)) {
+          map.set(item.img, true); 
           map.set(item.video, true);    // set any value to Map
           result.push({
             video: item.video,
@@ -68,7 +68,9 @@ export class MainComponent implements OnInit {
           });
         }
       }
+
       this.lista = result;
+
     });
   }
 
