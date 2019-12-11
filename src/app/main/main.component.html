@@ -1,0 +1,44 @@
+<!-- As a heading -->
+<nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">FastYou</span>
+</nav>
+
+<div class="container">
+
+    <div class="row" style="margin: auto; margin: 15px; margin-bottom: 25px;">
+        <div class="col-sm-8 offset-sm-1">
+            <input type="text" [(ngModel)]="song" name="song" class="form-control" placeholder="Seach a Song">
+        </div>
+        <div class="col-sm-2">
+            <button class="btn btn-primary" (click)="getVideos(song)">Search</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table" *ngIf="lista">
+            <tbody>
+                <tr *ngFor="let value of lista">
+                    <th>
+                        <img src="{{value.img}}" alt="" class="img-thumbnail">
+                    </th>
+                    <th>
+                        {{value.name}}
+                    </th>
+                    <th><button class="btn btn-secondary" (click)="open(content); setVideo(value.video)">Ver Video</button></th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Video</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" style="width: 100%">
+        <iframe [src]="getVideo()" style="width: 100%" frameborder="0"></iframe>
+    </div>
+</ng-template>
